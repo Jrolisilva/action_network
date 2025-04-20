@@ -1,16 +1,18 @@
 # frozen_string_literal: true
+require_relative './slack/request'
+require_relative './open_ai/request'
 require 'sinatra'
 require 'json'
 require 'httparty'
 require 'dotenv/load'
 
-set :bind, '0,0,0,0'
+set :bind, '0.0.0.0'
 set :port, 4567
 
 CACHE_FILE = 'cache/messages.json'
 
-File.Utils.mkdir_p('cache')
-File.Write.file(CACHE_FILE, '[]') unless File.exist?(CACHE_FILE)
+FileUtils.mkdir_p('cache')
+File.write(CACHE_FILE, '[]') unless File.exist?(CACHE_FILE)
 
 def load_cache
   JSON.parse(File.read(CACHE_FILE))
