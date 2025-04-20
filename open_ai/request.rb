@@ -1,17 +1,16 @@
+# lib/open_ai/request.rb
 module OpenAi
   class Request
-    attr_reader : text, :api_key, :base_url
-    OPENAI_API_KEY = ENV['OPENAI_API_KEY']
-    URL = ENV['OPENAI_URL']
+    attr_reader :text, :api_key, :base_url
 
     def initialize(text)
       @text = text
-      @api_key = OPENAI_API_KEY
-      @base_url = 'https://api.openai.com/v1'
+      @api_key = ENV['OPENAI_API_KEY']
+      @base_url = ENV['OPENAI_URL']
     end
 
-    def self.call
-      new(ENV['OPENAI_API_KEY']).call
+    def self.call(text)
+      new(text).call
     end
 
     def call
@@ -25,13 +24,13 @@ module OpenAi
 
     def headers
       {
-        'Authorization' => "Bearer #{OPENAI_API_KEY}",
+        'Authorization' => "Bearer #{api_key}",
         'Content-Type' => 'application/json'
       }
     end
 
     def body
-      body = {
+      {
         model: 'gpt-3.5-turbo',
         messages: [
           { role: 'system', content: 'Traduza tudo para português do Brasil.' },

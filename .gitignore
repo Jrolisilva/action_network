@@ -1,0 +1,25 @@
+# .gitignore
+
+# Ignore .env with secrets
+.env
+
+# Ignore cache folder with message logs
+/cache/
+
+# Ruby junk
+*.gem
+*.rbc
+
+# Logs and temp files
+log/
+tmp/
+*.log
+
+# OS/filesystem
+.DS_Store
+Thumbs.db
+
+# Editor-specific
+.idea/
+.vscode/
+*.swp

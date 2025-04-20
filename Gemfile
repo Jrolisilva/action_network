@@ -5,3 +5,5 @@ gem 'httparty'
 
 gem "sinatra", "~> 4.1"
 gem "dotenv", "~> 3.1"
+gem 'rackup'
+gem 'puma'
