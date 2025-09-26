@@ -9,11 +9,6 @@ gem "httparty", "~> 0.23"
 gem "rack-cors", "~> 2.0"
 gem "bootsnap", "~> 1.18", require: false
 
-group :development, :test do
-  gem "dotenv-rails", "~> 3.1"
-  gem "debug", platforms: %i[mri x64_mingw32 arm64_darwin]
-end
-
 group :development do
   gem "web-console", ">= 4.2.0"
   gem "listen", "~> 3.8"
