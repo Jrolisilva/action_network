@@ -1,26 +1,24 @@
-# .gitignore
-
-# Ignore .env with secrets
+/.bundle
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/
+!/tmp/.keep
+!/tmp/pids/
+!/tmp/pids/.keep
+!/tmp/cache/
+!/tmp/cache/.keep
+!/tmp/sockets/
+!/tmp/sockets/.keep
+/storage/*
+!/storage/.keep
+/node_modules
+/yarn-error.log
+.byebug_history
 .env
-
-# Ignore cache folder with message logs
-/cache/
-
-# Ruby junk
-*.gem
-*.rbc
-
-# Logs and temp files
-log/
-tmp/
-*.log
-
-# OS/filesystem
-.DS_Store
-Thumbs.db
-
-# Editor-specific
-.idea/
-.vscode/
-*.swp
-.env
+.env.*
+!.env.example
+/.ruby-version
+/public/uploads
