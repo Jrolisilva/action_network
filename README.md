@@ -1,34 +1,76 @@
-# Slack Translator App
+# Action Network Rails API
 
-Um app Ruby/Sinatra que traduz mensagens de um canal do Slack em tempo real usando a API da OpenAI, exibindo-as lado a lado em uma interface web acessível via internet (ex: Cloudflare Tunnel). Ideal para entrevistas bilíngues ou conversas assistidas.
+API construída com Rails 8 (modo API) para integrar mensagens do Slack com traduções automáticas fornecidas pela OpenAI. O projeto expõe um endpoint REST que retorna as mensagens do canal já acompanhadas de suas traduções em português brasileiro.
 
----
+## Pré-requisitos
 
-## Funcionalidades
-
-- Captura mensagens do Slack (mock ou API real)
-- Tradução em tempo real via OpenAI (gpt-3.5-turbo)
-- Interface web (HTML/CSS/JS puro, sem frameworks)
-- Caixa de resposta com tradução reversa e confirmação
-- Deploy fácil via `ruby main.rb` ou `cloudflared tunnel`
-
----
-
-## Requisitos
-
-- Ruby 3.1+
+- Ruby 3.2.3
 - Bundler
-- Conta OpenAI com API Key
-- App no Slack com token de bot
-- Cloudflare CLI (opcional para túnel público)
+- SQLite 3 (ambiente de desenvolvimento)
+- Tokens válidos do Slack e da OpenAI
 
----
+## Configuração
 
-## Instalação
+1. Instale as dependências:
+
+   ```bash
+   bundle install
+   ```
+
+2. Configure as variáveis de ambiente necessárias. Crie um arquivo `.env` (não versionado) com, pelo menos:
+
+   ```dotenv
+   OPENAI_API_KEY=...
+   OPENAI_URL=https://api.openai.com/v1/chat/completions
+   SLACK_URL=https://slack.com/api/
+   SLACK_CHANNEL_ID=...
+   SLACK_BOT_TOKEN=...
+   ```
+
+3. Prepare o banco de dados (SQLite por padrão):
+
+   ```bash
+   bin/rails db:prepare
+   ```
+
+## Execução
+
+Inicie o servidor de desenvolvimento:
 
 ```bash
-# Instale as dependências
-bundle install
+bin/dev
+```
 
-# Copie o arquivo de exemplo e configure suas variáveis
-cp .env.example .env
+O serviço estará disponível em `http://localhost:3000`.
+
+## Endpoints
+
+### `GET /messages`
+
+- Obtém o histórico do canal informado via Slack API.
+- Traduz cada mensagem (exceto mensagens de bot) com a API da OpenAI.
+- Usa um cache em arquivo (`tmp/cache/messages.json`) para evitar traduções repetidas.
+
+Resposta de exemplo:
+
+```json
+{
+  "messages": [
+    {
+      "ts": "1715012345.000100",
+      "user": "U123456",
+      "text": "Good morning!",
+      "subtype": null,
+      "translated_text": "Bom dia!"
+    }
+  ]
+}
+```
+
+## Testes
+
+Execute a suíte de testes padrão do Rails:
+
+```bash
+bundle exec rails test
+```
